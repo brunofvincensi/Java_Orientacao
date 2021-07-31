@@ -1,64 +1,36 @@
 package br.com.javaoo;
-import br.com.javaoo.comoo.Circulo;
-import br.com.javaoo.comoo.Triangulo;
-import java.util.Locale;
-import java.util.Scanner;
 
-public class Principal {          /*
+import br.com.javaoo.entities.Product;
+
+public class Principal {
     public static void main(String[] args) {
 
-        Locale.setDefault(Locale.US);
-        Scanner sc = new Scanner(System.in);
 
-        Triangulo x = new Triangulo();
+        Product eletrodomestico = new Product();
 
-        System.out.println("Entre com os valores de area do primeiro triangulo");
+        eletrodomestico.setName("Geladeira");
+        eletrodomestico.setPrice(1.200);
+        eletrodomestico.setQuantity(2);
 
-         x.lado1 = sc.nextDouble();
-         x.lado2 = sc.nextDouble();
-         x.lado3 = sc.nextDouble();
-         x.calculaArea();
-
-
-         Triangulo y = new Triangulo();
-
-        System.out.println("Entre com os valores de area do segundo triangulo");
-        y.lado1 = sc.nextDouble();
-        y.lado2 = sc.nextDouble();
-        y.lado3 = sc.nextDouble();
-
-        y.calculaArea();
-
-        sc.close();
+        System.out.println(eletrodomestico.getName());
+        System.out.println(eletrodomestico.getPrice());
+        System.out.println(eletrodomestico.getQuantity());
 
 
-    }
-    */
+        Product mesa = new Product();
 
-    public static void main(String[] args) {
+        mesa.setName("Mesa de Jantar");
+        mesa.setPrice(800);
+        mesa.setQuantity(10);
 
-        Locale.setDefault(Locale.US);
-        Scanner sc = new Scanner(System.in);
-
-
-        Circulo x = new Circulo();
-
-
-        System.out.println("Entre com os valores de area do primeiro circulo");
-        x.raio = sc.nextDouble();
-        x.calculoArea();
-
-        Circulo y = new Circulo();
-
-        System.out.println("Entre com os valores de area do segundo circulo");
-
-        y.raio = sc.nextDouble();
-        y.calculoArea();
+        System.out.println(mesa.getName());
+        System.out.println(mesa.getPrice());
+        System.out.println(mesa.getQuantity());
 
 
-        sc.close();
+
+
+
 
     }
 }
-
-
