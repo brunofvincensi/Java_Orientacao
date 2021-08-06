@@ -21,7 +21,7 @@ public class Principal {
         System.out.println("Price: ");
         p.setPrice(sc.nextDouble());
         System.out.println("Quantity: ");
-        p.setQuantity(sc.nextInt());
+        p.addProduct(sc.nextInt());
 
         System.out.println("Product data: " + p.getName() + " $ " + p.getPrice() + " " + p.getQuantity() + " units, "
                 +  "Total: $" + p.totalValueInStock());
@@ -31,14 +31,13 @@ public class Principal {
         p.addProduct(sc.nextInt());
 
 
-
-        System.out.println("Updated data: " + p.getName() + " $ " + p.getPrice()  + p.getQuantity() + " units, "
+        System.out.println("Updated data: " + p.getName() + " $ " + p.getPrice() + " " + p.getQuantity() + " units, "
                 +  "Total: $" + p.totalValueInStock());
 
         System.out.println("Enter the number of products to be removed from stock: ");
         p.removeProduct(sc.nextInt());
 
-        System.out.println("Updated data: " + p.getName() + " $ " + p.getPrice()  + p.getQuantity() + " units, "
+        System.out.println("Updated data: " + p.getName() + " $ " + p.getPrice() + " " + p.getQuantity() + " units, "
                 +  "Total: $" + p.totalValueInStock());
 
 

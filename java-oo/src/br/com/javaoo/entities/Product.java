@@ -8,6 +8,12 @@ public class Product {
     private int quantity;
     private String color;
 
+
+    public Product(){
+        System.out.println("Novo objeto construido");
+
+    }
+
     //metodos acessores
     //GETTERS and SETTERS
 
@@ -28,11 +34,14 @@ public class Product {
     }
 
 
-    public void setQuantity(int quantidade){
+   /* public void setQuantity(int quantidade){
 
         this.quantity = quantidade;
     }
-    public int getQuantity(){
+    */
+
+    public int getQuantity()
+    {
         return quantity;
     }
 
