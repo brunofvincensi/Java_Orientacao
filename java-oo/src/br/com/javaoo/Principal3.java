@@ -14,9 +14,9 @@ public class Principal3 {
         r.setAltura(sc.nextDouble());
         r.setLargura(sc.nextDouble());
 
-        r.area();
-        r.perimetro();
-        r.diagonal();
+        System.out.println("Area = " + r.area());
+        System.out.println("Perimetro = " + r.perimetro());
+        System.out.println("Diagonal = " + r.diagonal());
 
 
         sc.close();

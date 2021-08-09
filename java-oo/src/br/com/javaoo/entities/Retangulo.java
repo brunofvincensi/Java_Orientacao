@@ -15,21 +15,21 @@ public class Retangulo {
         this.largura = largura;
     }
 
-    public void area(){
+    public double area(){
 
-       double area = largura * altura;
-        System.out.println("Area = " + area);
+       return largura * altura;
+
     }
-    public void perimetro(){
-        double perimetro = 2*altura + 2*largura;
-        System.out.println("Perimeter = " +  perimetro);
+    public double perimetro(){
+        return 2*altura + 2*largura;
+
     }
 
-    public void diagonal(){
+    public double diagonal(){
 
-        double diagonal = Math.sqrt(Math.pow(altura, 2) + Math.pow(largura, 2));
-        System.out.println("Diagonal = " + diagonal);
-    } 
+        return Math.sqrt(Math.pow(altura, 2) + Math.pow(largura, 2));
+
+    }
 
 
 
