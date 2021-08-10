@@ -1,8 +1,8 @@
-package com.empresa;
+package com.funcionarios;
 
-import com.empresa.entities.Funcionario;
-import com.empresa.entities.Proprio;
-import com.empresa.entities.Terceirizado;
+import com.funcionarios.entities.Funcionario;
+import com.funcionarios.entities.Proprio;
+import com.funcionarios.entities.Terceirizado;
 import java.util.Locale;
 import java.util.Scanner;
 public class Server {
@@ -12,10 +12,7 @@ public class Server {
         Scanner sc = new Scanner(System.in);
 
         int N = sc.nextInt();
-        String nomes = "";
-        String pagamentos = "";
-        String total = "";
-        int cont = N;
+        String ficha = "";
 
         for(int i = 1; i<=N; i++){
 
@@ -29,11 +26,8 @@ public class Server {
                 double valorHora = sc.nextDouble();
                 Funcionario p = new Proprio(nome, horasTrab, valorHora);
 
-               /* nomes = "Nomes: " + nome +"; " + nomes + "Pagamentos: " + p.pagamento() +"; " + pagamentos;
-                pagamentos = p.pagamento() +"; " + pagamentos;*/
+                ficha = ficha + " Funcionario " + i + " = " + nome + "   R$" + p.pagamento();
 
-                total = " Funcionario " + cont + " = " + nome + "   " + p.pagamento() + total;
-                cont = cont - 1;
 
             }else if(x.equals("t")) {
 
@@ -43,27 +37,19 @@ public class Server {
                 Funcionario t = new Terceirizado(nome, horasTrab, valorHora);
                 t.setDespesasAdc(sc.nextDouble());
 
-                nomes = nome + "; " + nomes;
-                pagamentos = t.pagamento() + "; " + pagamentos;
-
+                ficha = ficha + " Funcionario " + i + " = " + nome + "   R$" + t.pagamento();
 
             }
 
         }
 
-        System.out.println(total);
+        System.out.println(ficha);
 
-        System.out.println("Nomes: " + nomes);
-        System.out.println("Pagamentos: " + pagamentos);
 
 
         sc.close();
 
 
-
-
     }
-
-
 
 }

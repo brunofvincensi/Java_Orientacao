@@ -1,4 +1,4 @@
-package com.empresa.entities;
+package com.funcionarios.entities;
 
 public abstract class Funcionario {
     private String nome;
@@ -16,7 +16,6 @@ public abstract class Funcionario {
         this.nome = nome;
         this.horasTrab = horasTrab;
         this.valorHora = valorHora;
-
     }
 
     public String getNome() {
@@ -35,21 +34,10 @@ public abstract class Funcionario {
         return horasTrab;
     }
 
-
-
     public double getValorHora() {
         return valorHora;
     }
 
-
-
     public abstract double pagamento();
-
-
-
-
-
-
-
 
 }

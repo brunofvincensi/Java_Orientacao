@@ -1,14 +1,12 @@
-package com.empresa.entities;
+package com.funcionarios.entities;
 
 public class Terceirizado extends Funcionario{
     public Terceirizado() {
     }
 
-
     public Terceirizado(String nome, int horasTrab, double valorHora) {
         super(nome, horasTrab, valorHora);
     }
-
 
     @Override
     public double pagamento() {

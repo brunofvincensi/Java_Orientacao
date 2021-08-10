@@ -1,4 +1,4 @@
-package com.empresa.entities;
+package com.funcionarios.entities;
 
 public class Proprio extends Funcionario{
 
