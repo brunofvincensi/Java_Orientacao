@@ -17,6 +17,17 @@ public class Curso {
         this.categoria = categoria;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
 
     public Long getId() {
         return id;
@@ -29,6 +40,7 @@ public class Curso {
     public Categoria getTexto() {
         return categoria;
     }
+
 
     @Override
     public boolean equals(Object o) {

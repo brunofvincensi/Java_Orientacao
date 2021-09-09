@@ -1,26 +1,62 @@
 package com.entra21.controller;
 
-import com.entra21.model.Categoria;
-import com.entra21.model.Curso;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.entra21.model.Categoria;
+import com.entra21.repositories.CategoriaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-
-@Controller
+@RestController
+@RequestMapping("/categoria")
 public class CategoriaController {
 
+    @Autowired
+    CategoriaRepository categoriaRepository;
 
-
-    @RequestMapping("/categorias")
+    @GetMapping
     @ResponseBody
-    public List<Categoria> listarTudo(){
-
-
-        return Arrays.asList(new Categoria(1L, "Produto higiene"),
-                new Categoria(2L, "Produtor limpeza"));
+    public List<Categoria> listar(){
+        return categoriaRepository.findAll();
     }
+
+    @PostMapping
+    public void cadastrar(@RequestBody Categoria categoria){
+        categoriaRepository.save(categoria);
+    }
+
+@PutMapping("/{id}")
+@Transactional
+    public void atualizar(@PathVariable  Long id, @RequestBody String descricao){
+
+        Optional<Categoria> categoriaBuscada = categoriaRepository.findById(id);
+
+
+        if(categoriaBuscada.isPresent()){
+
+            Categoria c = categoriaRepository.getById(id);
+            c.setDescricao(descricao);
+
+            categoriaRepository.save(c);
+        }
+
+
+
+}
+
+@DeleteMapping("/{id}")
+    @Transactional
+    public void  excluir(@PathVariable Long id){
+
+        categoriaRepository.deleteById(id);
+
+}
+
+
+
 }
