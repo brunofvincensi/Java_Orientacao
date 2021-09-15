@@ -1,34 +1,51 @@
 package com.entra21.controller;
 
+import com.entra21.controller.dto.CategoriaDTO;
+import com.entra21.controller.dto.CursoDTO;
 import com.entra21.model.Categoria;
 import com.entra21.model.Curso;
+import com.entra21.repositories.CategoriaRepository;
+import com.entra21.repositories.CursoRepository;
 import org.hibernate.hql.spi.id.local.LocalTemporaryTableBulkIdStrategy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/curso")
 public class CursoController {
 
 
-    @RequestMapping("cursos")
+
+    @Autowired
+    CursoRepository cursoRepository;
+
+ /*   @GetMapping
     @ResponseBody
-    public List<Curso> listarTudo(){
-        Curso springWeb = new Curso(1L, "Spring web", new Categoria(10L, "Web"));
-        Curso postgreSQL = new Curso(2L, "PostgreSQL", new Categoria(11L,"Banco de dados" ));
-        Curso css = new Curso(3L, "CSS", new Categoria(12L, "Desing"));
-        return Arrays.asList(springWeb, postgreSQL, css);
+    public List<Categoria> listar(){
+        return categoriaRepository.findAll();
+    }
+*/
+
+
+    @GetMapping
+    public List<CursoDTO> litarTudo()
+    {
+        List<Curso> cursoList = cursoRepository.findAll();
+        return CursoDTO.converter(cursoList);
+
     }
 
-    public void cadatrar(Curso curso){
 
 
-
+    @PostMapping
+    public void cadastrar(@RequestBody Curso curso){
+        cursoRepository.save(curso);
     }
 
 

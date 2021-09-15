@@ -1,7 +1,10 @@
 package com.entra21.controller;
 
 
+import com.entra21.controller.dto.CategoriaDTO;
+import com.entra21.controller.dto.UsuarioDTO;
 import com.entra21.model.Categoria;
+import com.entra21.model.Usuario;
 import com.entra21.repositories.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,11 +22,23 @@ public class CategoriaController {
     @Autowired
     CategoriaRepository categoriaRepository;
 
-    @GetMapping
+ /*   @GetMapping
     @ResponseBody
     public List<Categoria> listar(){
         return categoriaRepository.findAll();
     }
+*/
+
+
+    @GetMapping
+    public List<CategoriaDTO> litarTudo()
+    {
+        List<Categoria> categoriaList = categoriaRepository.findAll();
+        return CategoriaDTO.converter(categoriaList);
+
+    }
+
+
 
     @PostMapping
     public void cadastrar(@RequestBody Categoria categoria){

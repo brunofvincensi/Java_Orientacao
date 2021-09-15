@@ -1,6 +1,7 @@
 package com.entra21.controller;
 
 
+import com.entra21.controller.dto.UsuarioDTO;
 import com.entra21.model.Categoria;
 import com.entra21.model.Usuario;
 
@@ -19,16 +20,25 @@ public class UsuarioController {
 
 
 
-    @RequestMapping
-    @ResponseBody
-    public List<Usuario> litarTudo()
+   // @RequestMapping
+   // @ResponseBody
+  /*  public List<Usuario> litarTudo()
     {
         return usuarioRepository.findAll();
+
+    }*/
+
+    @GetMapping
+    public List<UsuarioDTO> litarTudo()
+    {
+        List<Usuario> usuarioList = usuarioRepository.findAll();
+        return UsuarioDTO.converter(usuarioList);
 
     }
 
     @PostMapping
-    public void cadastrar(@RequestBody Usuario usuario){
+    public void cadastrar(@RequestBody Usuario usuario)
+    {
         usuarioRepository.save(usuario);
     }
 

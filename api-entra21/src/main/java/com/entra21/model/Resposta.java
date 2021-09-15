@@ -1,11 +1,29 @@
 package com.entra21.model;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
 public class Resposta {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String mensagem;
+
+
+
+    @ManyToOne
+    private Topico topico;
+
+
+
+    private LocalDateTime dataCriacao = LocalDateTime.now();
+
+    @ManyToOne
+    private Usuario autor;
+    private Boolean solucao = false;
 
     public Resposta(Long id, String mensagem, Topico topico, Usuario autor, Boolean solucao) {
         this.id = id;
@@ -14,12 +32,6 @@ public class Resposta {
         this.autor = autor;
         this.solucao = solucao;
     }
-
-    private String mensagem;
-    private Topico topico;
-    private LocalDateTime dataCriacao = LocalDateTime.now();
-    private Usuario autor;
-    private Boolean solucao = false;
 
     @Override
     public int hashCode() {
