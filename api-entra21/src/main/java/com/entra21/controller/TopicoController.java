@@ -1,14 +1,15 @@
 package com.entra21.controller;
 
-import com.entra21.controller.dto.TopicoDTO;
-import com.entra21.controller.dto.TopicoForm;
+import com.entra21.controller.dto.*;
 import com.entra21.model.Categoria;
 import com.entra21.model.Curso;
 import com.entra21.model.Topico;
 import com.entra21.model.Usuario;
 import com.entra21.repositories.CursoRepository;
+import com.entra21.repositories.RespostaRepository;
 import com.entra21.repositories.TopicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -44,31 +45,43 @@ public class TopicoController {
     @Autowired
     CursoRepository cursoRepository;
 
+    @Autowired
+    RespostaRepository respostaRepository;
+
+
+
   @GetMapping
-  public List<TopicoDTO> listarTopico(String nomeCuro){
+  public List<TopicoDTO> listarTopico(String nomeCuro) {
 
       List<Topico> topicos;
 
-      if(nomeCuro == null){
+      if (nomeCuro == null) {
 
           topicos = topicoRepository.findAll();
 
-      }
-      else{
+      } else {
           topicos = topicoRepository.carregarPorNomeDoCurso(nomeCuro);
+
 
       }
 
 
       return TopicoDTO.converter(topicos);
-
   }
+
+
+
+
+
+
 
     @PostMapping
     public ResponseEntity<TopicoDTO> gravar(@RequestBody @Valid TopicoForm topicoForm, UriComponentsBuilder uriComponentsBuilder){
 
       Topico topico = topicoForm.converter(cursoRepository);
         topicoRepository.save(topico);
+
+        // mostrar a devida resposta, ex 201
 
         URI uri = uriComponentsBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
 
@@ -83,21 +96,55 @@ public class TopicoController {
 
     @PutMapping("/{id}")
     @Transactional
-    public void atualizar(@PathVariable  Long id, @RequestBody String mensagem){
+    public ResponseEntity<TopicoDTO> atualizar(@PathVariable  Long id, @RequestBody @Valid AtualizarDadoDTO form){
 
-        Optional<Topico> mensagemBuscada = topicoRepository.findById(id);
+        Optional<Topico> topicoPesquisado = topicoRepository.findById(id);
 
 
-        if(mensagemBuscada.isPresent()){
+        if(topicoPesquisado.isPresent()){
 
-            Topico t = topicoRepository.getById(id);
-            t.setMensagem(mensagem);
+            Topico topico = form.atualizar(id, topicoRepository);
+            return ResponseEntity.ok(new TopicoDTO(topico));
 
-            topicoRepository.save(t);
+
+
         }
+
+        return ResponseEntity.notFound().build();
 
 
 
     }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> remover(@PathVariable Long id){
+
+      Optional<Topico> topico = topicoRepository.findById(id);
+      if(topico.isPresent()){
+
+          topicoRepository.deleteById(id);
+          return ResponseEntity.ok().build();
+
+
+      }
+
+      return ResponseEntity.notFound().build();
+
+
+    }
+
+    @GetMapping ( "/{id}" )
+    public ResponseEntity <DetalheTopicoDTO> redirecionamento (@PathVariable Long id) {
+        Optional <Topico> topicoPesquisado = topicoRepository .findById (id) ;
+        if (topicoPesquisado.isPresent ()) {
+            return ResponseEntity. ok ( new DetalheTopicoDTO (topicoPesquisado.get())) ;
+        }
+        return ResponseEntity. notFound () .build () ;
+    }
+
+
+
+
 
 }

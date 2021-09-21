@@ -1,9 +1,12 @@
 package com.entra21.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.validator.constraints.Length;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -12,41 +15,45 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private String categoria;
 
-    public Curso() {
-    }
 
-    public Curso(Long id, String nome, String categoria) {
+    @OneToMany(mappedBy = "curso")
+    private List<Categoria> categorias = new ArrayList<>();
+
+
+    public Curso(Long id, String nome, List<Categoria> categorias) {
         this.id = id;
         this.nome = nome;
-        this.categoria = categoria;
+        this.categorias = categorias;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Curso(String nome, Categoria categoria) {
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getNome() {
         return nome;
     }
 
-    public String getTexto() {
-        return categoria;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -61,14 +68,5 @@ public class Curso {
         return Objects.hash(id);
     }
 
-    @Override
-    public String toString() {
 
-        return "Curso{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", categoria='" + categoria + '\'' +
-                '}';
-
-    }
 }

@@ -1,9 +1,6 @@
 package com.entra21.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 
@@ -16,29 +13,42 @@ public class Categoria {
     private Long id;
     private String descricao;
 
+
+    @ManyToOne
+    private Curso curso;
+
     public Categoria() {
     }
 
-    public Categoria(Long id, String descricao) {
+
+    public Categoria(Long id, String descricao, Curso curso) {
         this.id = id;
         this.descricao = descricao;
-    }
-
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+        this.curso = curso;
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getDescricao() {
         return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 
     @Override

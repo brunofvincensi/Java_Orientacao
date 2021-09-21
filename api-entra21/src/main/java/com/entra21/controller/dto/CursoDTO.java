@@ -4,20 +4,21 @@ import com.entra21.model.Categoria;
 import com.entra21.model.Curso;
 import com.entra21.model.Usuario;
 
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CursoDTO {
 
     private String nome;
-    private String categoria;
+    @OneToMany(mappedBy = "topico")
+    private List<Curso> categorias = new ArrayList<>();
 
     public CursoDTO(Curso curso) {
         this.nome = curso.getNome();
-
+      //  this.categorias = curso.getCategorias();
     }
-
-
 
     public String getNome() {
         return nome;
@@ -27,13 +28,6 @@ public class CursoDTO {
         this.nome = nome;
     }
 
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
 
     public static List<CursoDTO> converter(List<Curso> cursos){
 

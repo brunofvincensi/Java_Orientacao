@@ -1,16 +1,20 @@
 package com.entra21.controller;
 
 
-import com.entra21.controller.dto.CategoriaDTO;
-import com.entra21.controller.dto.UsuarioDTO;
+import com.entra21.controller.dto.*;
 import com.entra21.model.Categoria;
+import com.entra21.model.Topico;
 import com.entra21.model.Usuario;
 import com.entra21.repositories.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -31,46 +35,65 @@ public class CategoriaController {
 
 
     @GetMapping
-    public List<CategoriaDTO> litarTudo()
-    {
+    public List<CategoriaDTO> litarTudo() {
         List<Categoria> categoriaList = categoriaRepository.findAll();
         return CategoriaDTO.converter(categoriaList);
 
     }
 
 
-
     @PostMapping
-    public void cadastrar(@RequestBody Categoria categoria){
+    public ResponseEntity<CategoriaDTO> gravar(@RequestBody @Valid Categoria categoria, UriComponentsBuilder uriComponentsBuilder) {
+
         categoriaRepository.save(categoria);
+
+        // mostrar a devida resposta, ex 201
+
+        URI uri = uriComponentsBuilder.path("/categoria/{id}").buildAndExpand(categoria.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(new CategoriaDTO(categoria));
+
+
     }
 
-@PutMapping("/{id}")
-@Transactional
-    public void atualizar(@PathVariable  Long id, @RequestBody String descricao){
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<CategoriaDTO> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizarCatDTO form) {
 
-        Optional<Categoria> categoriaBuscada = categoriaRepository.findById(id);
+        Optional<Categoria> categoriaPesquisado = categoriaRepository.findById(id);
 
 
-        if(categoriaBuscada.isPresent()){
+        if (categoriaPesquisado.isPresent()) {
 
-            Categoria c = categoriaRepository.getById(id);
-            c.setDescricao(descricao);
+            Categoria categoria = form.atualizar(id, categoriaRepository);
+            return ResponseEntity.ok(new CategoriaDTO(categoria));
 
-            categoriaRepository.save(c);
+
         }
 
+        return ResponseEntity.notFound().build();
 
 
-}
+    }
 
-@DeleteMapping("/{id}")
+
+    @DeleteMapping("/{id}")
     @Transactional
-    public void  excluir(@PathVariable Long id){
+    public ResponseEntity<?> remover(@PathVariable Long id){
 
-        categoriaRepository.deleteById(id);
+        Optional<Categoria> categoria = categoriaRepository.findById(id);
+        if(categoria.isPresent()){
 
-}
+            categoriaRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+
+
+        }
+
+        return ResponseEntity.notFound().build();
+
+
+    }
 
 
 
